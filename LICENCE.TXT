@@ -1,0 +1,8 @@
+/**
+/* (c) Moodle Block - Guy Thomas Ossett School 2007, 2008, 2009, 2010
+/* (c) Original Smb Web Client - Victor M. Varela 2005
+/* Licence - GNU GENERAL PUBLIC LICENSE - Version 3, 29 June 2007
+/* Refer to http://www.gnu.org/licenses/gpl.html for full terms
+/* The author and any associated organisations accept no liability for any consequences resulting from the use of this software.
+USE THIS SOFTWARE AT YOUR OWN RISK.
+**/

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{title}</title>
+	<meta http-equiv="content-type" content="text/html; charset={charset}" />
+	<link rel="icon" href="{favicon}" type="image/ico" />
+	<link rel="shortcut icon" href="{favicon}" />
+	<link rel="stylesheet" media="all" type="text/css" href="{baseurl}/style/main.css" />    
+	<style type="text/css">
+	<!--
+    
+		a.folder{background-image:url({pixpath}/f/folder.gif) !important;}   
+		body, table { color: black; background: white; font-size: 8pt; font-family: Tahoma, Arial, Helvetica; margin-top: 0px; margin-left: 0px; margin-right: 0px; width: 100%; }
+		input, select { font-size: 8pt; }
+		a { color: black; text-decoration: none; padding-left: 3px; padding-right: 3px; }
+		a:hover { background-color: #316ac5; color: white; padding-top: 3px; padding-bottom: 3px; }
+		th { text-align: left; white-space: nowrap; background-color: #eeead8; border-bottom: 3px solid #d6d2c2; border-left: 1px solid white; border-right: 1px solid #d6d2c2; padding-left: 10px; padding-right: 3px; padding-top: 3px; font-weight: normal; }
+		th:hover { background-color: #faf8f3; border-bottom: 3px solid #fcc247; }
+		th a:hover { background-color: #faf8f3; color: black; }
+		th.language { background-color: #225ad9; border-bottom: 3px solid #3888e9; border-left: 1px solid #3888e9; border-right: 1px solid black; padding-right: 10px; color: white; }
+		th.language a { color: white }
+		th.language a:hover { background-color: #225ad9; }
+		th.toolbar { background-color: #128be6; border-bottom: 3px solid #19b8f2; border-left: 1px solid #19b8f2; border-right: 1px solid black; padding-right: 10px; color: white; }
+		th.toolbar a { background-color: #128be6 }
+		td { white-space: nowrap; padding-right: 10px; padding-left: 5px; padding-top: 0px; padding-bottom: 0px; vertical-align: middle; }
+		td.order-by { background-color: #f7f7f7; }
+		td.checkbox, th.checkbox { width: 20px; text-align: right; padding-left: 0px; padding-right: 0px; }
+	-->
+	</style>
+</head>
+<body>
+
+{content}
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+/**********************************/
+/* custom file type images                      */
+/**********************************/
+
+a.file, a.folder, a:hover.file, a:hover.folder{
+display:block;
+padding:2px 2px 2px 22px !important;
+min-height:18px;
+background-repeat:no-repeat;
+background-position:2px;
+}
+
+a.file{
+background-image:url(filepix/file.png);
+}
+
+a.folder{
+background-image:url(filepix/folder.png);
+}
+
+a.ext_bat{
+background-image:url(filepix/file_bat.png) !important;
+}
+
+a.ext_bmp, a.ext_png, a.ext_gif, a.ext_jpg, a.ext_wmf {
+background-image:url(filepix/file_img.png) !important;
+}
+
+a.ext_ini, a.ext_cfg{
+background-image:url(filepix/file_ini.png) !important;
+}
+
+a.ext_htm, a.ext_html, a.ext_jsp{
+background-image:url(filepix/file_web.png) !important;
+}
+
+a.ext_php{
+background-image:url(filepix/file_php.png) !important;
+}
+
+a.ext_pdf{
+background-image:url(filepix/file_pdf.png) !important;
+}
+
+a.ext_avi, a.ext_wmv, a.ext_asf, a.ext_asx, a.ext_divx, a.ext_mpeg, a.ext_mpg4, a.ext_mpeg4, a.ext_mpg{
+background-image:url(filepix/file_vid.png) !important;
+}
+
+a.ext_mov, a.ext_qt {
+background-image:url(filepix/file_mov.png) !important;
+}
+
+a.ext_ra, a.ext_rm, a.ext_ram, a.ext_rmvb {
+background-image:url(filepix/file_rmn.png) !important;
+}
+
+a.ext_mdb, a.ext_accdb, a.ext_accde, a.ext_accdt, a.ext_accdr{
+background-image:url(filepix/file_mdb.png) !important;
+}
+
+a.ext_doc, a.ext_dot, a.ext_docx, a.ext_docm, a.ext_dotx, a.ext_dotm{
+background-image:url(filepix/file_doc.png) !important;
+}
+
+a.ext_exe{
+background-image:url(filepix/file_exe.png) !important;
+}
+
+a.ext_xls, a.ext_xlt{
+background-image:url(filepix/file_xls.png) !important;
+}
+
+a.ext_ppt, a.ext_pps, a.ext_pot, a.ext_pptx, a.ext_pptm, a.ext_potx, a.ext_potm, a.ext_ppam, a.ext_ppsx, a.ext_ppsm{
+background-image:url(filepix/file_ppt.png) !important;
+}
+
+a.ext_zip, a.ext_7z, a.ext_tgz, a.ext_tar, a.ext_gz, a.ext_rar {
+background-image:url(filepix/file_zip.png) !important;
+}
+
+a.ext_txt{
+background-image:url(filepix/file_txt.png) !important;
+}
+
+a.ext_odb{
+background-image:url(filepix/file_odb.png) !important;
+}
+
+a.ext_odg{
+background-image:url(filepix/file_odg.png) !important;
+}
+
+a.ext_odp{
+background-image:url(filepix/file_odp.png) !important;
+}
+
+a.ext_ods{
+background-image:url(filepix/file_ods.png) !important;
+}
+
+a.ext_odt{
+background-image:url(filepix/file_odt.png) !important;
+}
+
+a.ext_htm, a.ext_html{
+background-image:url(filepix/file_htm.png) !important;
+}
+
+a.ext_vnc{
+background-image:url(filepix/file_vnc.png) !important;
+}
+
+a.ext_iso{
+background-image:url(filepix/file_iso.png) !important;
+}
+
+
+/**********************************/
+/* END OF custom file type images */
+/**********************************/
