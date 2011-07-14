@@ -117,7 +117,7 @@ global $smb_cfg, $CFG, $USER, $site, $share;
 class block_smb_web_client extends block_base { 
 
     var $blockwww;
-	var $blockdir;
+        var $blockdir;
 
     function init() {
         global $CFG, $smb_cfg;
@@ -125,7 +125,6 @@ class block_smb_web_client extends block_base {
         // Set title and version
         $this->title = get_string('blockmenutitle', 'block_smb_web_client');
         $this->title = $this->title == "[[blockmenutitle]]" ? "Windows Share Web Client" : $this->title;
-        $this->version = 2011021900;
         
 		// set block dir
 		$this->blockdir=$CFG->dirroot.'/blocks/smb_web_client';
