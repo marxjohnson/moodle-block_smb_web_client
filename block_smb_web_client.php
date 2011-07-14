@@ -24,11 +24,11 @@
  * Version 2010042100
  * Bug fix by Roy Gore
  *     Fixed issue with files of 0 length in smbclient version 3.4+
- *    
+ *
  * Version 2009100500
  *    Modified logging to log to Moodle log instead of syslog
- * 
- * Version 2009080300 
+ *
+ * Version 2009080300
  * Bug fix by Guy Thomas
  *    On downloading an entire folder as a zip file, some reverse-proxy servers would handle the request incorrectly and a zip file would be downloaded with a file size of 0KB. This has been fixed by forcing the mime type to application/x-forcedownload for a folder being downloaded as a zip and by enabling the max folder size to be set or simply by removing the size header (if cfgMaxFolderZipSizeMB=0)
  *    Added config var max folder zip size for downloading folders as zips - $smb_cfg->cfgMaxFolderZipSizeMB
@@ -114,20 +114,20 @@
 global $smb_cfg, $CFG, $USER, $site, $share;
 @include('config_smb_web_client.php'); // config for this block only
 
-class block_smb_web_client extends block_base { 
+class block_smb_web_client extends block_base {
 
     var $blockwww;
-        var $blockdir;
+    var $blockdir;
 
     function init() {
         global $CFG, $smb_cfg;
-        
+
         // Set title and version
         $this->title = get_string('blockmenutitle', 'block_smb_web_client');
         $this->title = $this->title == "[[blockmenutitle]]" ? "Windows Share Web Client" : $this->title;
-        
-		// set block dir
-		$this->blockdir=$CFG->dirroot.'/blocks/smb_web_client';
+
+        // set block dir
+        $this->blockdir=$CFG->dirroot.'/blocks/smb_web_client';
         // set block www
         $this->blockwww=$CFG->wwwroot.'/blocks/smb_web_client';
     }
@@ -143,7 +143,7 @@ class block_smb_web_client extends block_base {
         $this->content = new stdClass;
         $this->content->footer = '';
         $this->content->text = '';
-        
+
         //No config warning
         if (!isset($smb_cfg)){
             // GT mod 2008/12/19 - report different error if file exists but config variable not set
@@ -154,12 +154,12 @@ class block_smb_web_client extends block_base {
             }
             return;
         }
-		
-		// Jon Witts Mod 2009060900: if ssl has not been explicitly set, then check Moodle config for loginhttps and set accordingly
-		if (!isset($smb_cfg->cfgssl) && (isset($CFG->loginhttps) && $CFG->loginhttps)){
-			$smb_cfg->cfgssl=true;
-		}		
-		
+
+        // Jon Witts Mod 2009060900: if ssl has not been explicitly set, then check Moodle config for loginhttps and set accordingly
+        if (!isset($smb_cfg->cfgssl) && (isset($CFG->loginhttps) && $CFG->loginhttps)){
+            $smb_cfg->cfgssl=true;
+        }
+
 
         //EMC mod to only show for logged in users!
         if (!isloggedin() || isguest()) {
@@ -167,68 +167,68 @@ class block_smb_web_client extends block_base {
         }
         //END EMC mod
 
-                
+
         // GT Mod - 2008091500
         if ($USER->auth!='manual'){
             // get home directory string from language file
             $homedirstr=get_string('homedir', 'block_smb_web_client');
             $homedirstr=$homedirstr=="[[homedir]]" ? "My Home Directory" : $this->title;
             $shareurl=$this->blockwww.'/smbwebclient_moodle.php?sesskey='.$USER->sesskey.'&amp;share=__home__';
-			
-			// modify shareurl to use ssl if necessary
-			if (isset($smb_cfg->cfgssl) && $smb_cfg->cfgssl){
-				$shareurl=str_ireplace('http://', 'https://', $shareurl);
-			}			
-            
+
+            // modify shareurl to use ssl if necessary
+            if (isset($smb_cfg->cfgssl) && $smb_cfg->cfgssl){
+                $shareurl=str_ireplace('http://', 'https://', $shareurl);
+            }
+
             // add home directory link to block content
             $this->content->text = '<a href="#" onclick="window.open(\''.$shareurl.'\',\''.$this->nice_popup_title($homedirstr).'\',\'width=640,height=480, scrollbars=1, resizable=1\'); return false;"><img src="'.$this->blockwww.'/pix/folder_home.png" alt="Home Folder"/> '.$homedirstr.'</a>';
         }
         // END GT Mod
-        
+
         // new code block for shares - JWI
         if (isset($smb_cfg->cfgWinShares) && !empty($smb_cfg->cfgWinShares)){
             foreach ($smb_cfg->cfgWinShares as $share_key=>$share_arr) {
-            
+
                 // If the share is not intended for specific courses then display
                 // else make sure current user can access course
-    			if (!isset ($share_arr['courses']) || empty($share_arr['courses'])){            
+                if (!isset ($share_arr['courses']) || empty($share_arr['courses'])){
                     // Add share to content
                     $this->addshare($share_key, $share_arr);
                 } else {
-                
+
                     // Check user can access course or course is currently open
                     if (isset($smb_cfg->cfgAllSharesSite) && $smb_cfg->cfgAllSharesSite){
-                    
+
                         // If user has access to any of the applicable course then display share
                         foreach ($share_arr['courses'] as $courseid){
-                            if (is_int($courseid)){                                                   
-                            
+                            if (is_int($courseid)){
+
                                 // Get course
                                 $course=get_record('course', 'id', $courseid);
-                            
+
                                 $ci=false;
                                 if ($course){
-                                
+
                                     // Get context instance
-                                    $ci=get_context_instance(CONTEXT_COURSE, $courseid);                                    
+                                    $ci=get_context_instance(CONTEXT_COURSE, $courseid);
                                 }
-                                
+
                                 // Check capabilities
                                 if ($ci && ($COURSE->id==$courseid || has_capability('moodle/course:view', $ci))){
-                                
+
                                     // Add share to content
                                     $this->addshare($share_key, $share_arr);
-                                    
+
                                     // Don't bother checking other applicable courses
                                     break;
                                 }
                             }
                         }
                     } else {
-                       
+
                         // Check course open
                         if (in_array($COURSE->id, $share_arr['courses'])){
-                        
+
                             // Add share to content
                             $this->addshare($share_key, $share_arr);
                         }
@@ -239,38 +239,38 @@ class block_smb_web_client extends block_base {
         // end new code block for shares - JWI
         return $this->content;
     }
-    
+
     /**
     * Add share to block
     */
     private function addshare($share_key, $share_arr){
         global $CFG, $USER, $smb_cfg;
         $shareurl=$this->blockwww.'/smbwebclient_moodle.php?sesskey='.$USER->sesskey.'&amp;share='.$share_key;
-		
-		// GT Mod 2009031700 force https protocol if necessary
-		if (isset($smb_cfg->cfgssl) && $smb_cfg->cfgssl){
-			$shareurl=str_ireplace('http://', 'https://', $shareurl);
-		}
-		
+
+            // GT Mod 2009031700 force https protocol if necessary
+            if (isset($smb_cfg->cfgssl) && $smb_cfg->cfgssl){
+                $shareurl=str_ireplace('http://', 'https://', $shareurl);
+            }
+
         $this->content->text.=$this->content->text!='' ? '<br />' : '';
-        $this->content->text.='<a href="#" onclick="window.open(\''.$shareurl.'\',\''.$this->nice_popup_title($share_arr['title']).'\',\'width=640,height=480, scrollbars=1, resizable=1\'); return false;"><img src="'.$CFG->pixpath.'/f/folder.gif" alt="'.$share_arr['title'].'" /> '.$share_arr['title'].'</a>';     
+        $this->content->text.='<a href="#" onclick="window.open(\''.$shareurl.'\',\''.$this->nice_popup_title($share_arr['title']).'\',\'width=640,height=480, scrollbars=1, resizable=1\'); return false;"><img src="'.$CFG->pixpath.'/f/folder.gif" alt="'.$share_arr['title'].'" /> '.$share_arr['title'].'</a>';
     }
-    
+
     /**
     * Converts a string to a ie popup title friendly string
     * @param required $str - the title you want to make friendly to ie
-    */    
-    private function nice_popup_title($str){    	
+    */
+    private function nice_popup_title($str){
     	$bannedChars=array(" ", "*", "{", "}", "(", ")", "<", ">", "[", "]", "=", "+", "\"", "\\", "/", ",",".",":",";");
-    					
+
     	foreach ($bannedChars as $banned){
-    		$str=str_replace($banned,"_", $str);
+            $str=str_replace($banned,"_", $str);
     	}
-    	
+
     	return ($str);
-	
-    }    
-    
+
+    }
+
     /**
     * Get ldap entry by user name
     * @param required $username
@@ -279,15 +279,15 @@ class block_smb_web_client extends block_base {
         $ap_ldap=new auth_plugin_ldap();
         $ldapconnection=$ap_ldap->ldap_connect();
         $user_dn = $ap_ldap->ldap_find_userdn($ldapconnection, $username);
-        $sr = ldap_read($ldapconnection, $user_dn, 'objectclass=*', array());	
+        $sr = ldap_read($ldapconnection, $user_dn, 'objectclass=*', array());
         if ($sr)  {
             $info=$ap_ldap->ldap_get_entries($ldapconnection, $sr);
         } else {
             return (false);
         }
         return ($info);
-    }    
-    
+    }
+
 }
 
 ?>
