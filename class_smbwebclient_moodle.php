@@ -152,7 +152,7 @@ class smbwebclient_moodle extends smbwebclient {
             // get user ldap object
             $ldapObj=$this->_getldap_entry($USER->username);
             if (!isset($ldapObj[0][$homedirfld][0])){
-                $this->criticalError='No home directory specified in ldap for this user';
+                $this->criticalError=get_string('nohomeforuser', 'block_smb_web_client');
             }
 
             // set smbroot to user home dir

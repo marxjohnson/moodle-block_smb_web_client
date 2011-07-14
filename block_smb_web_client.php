@@ -122,9 +122,9 @@ class block_smb_web_client extends block_base {
     function init() {
         global $CFG, $smb_cfg;
 
-        // Set title and version
-        $this->title = get_string('blockmenutitle', 'block_smb_web_client');
-        $this->title = $this->title == "[[blockmenutitle]]" ? "Windows Share Web Client" : $this->title;
+        // Set title
+        $this->title = get_string('pluginname', 'block_smb_web_client');
+        $this->title = $this->title == "[[blockmenutitle]]" ? get_string('pluginname', 'block_smb_web_client') : $this->title;
 
         // set block dir
         $this->blockdir=$CFG->dirroot.'/blocks/smb_web_client';
@@ -133,7 +133,7 @@ class block_smb_web_client extends block_base {
     }
 
     function get_content() {
-        global $CFG, $USER, $COURSE, $smb_cfg;
+        global $CFG, $USER, $COURSE, $DB, $smb_cfg;
 
         // return content if allready set
         if ($this->content !== NULL) {
@@ -148,9 +148,9 @@ class block_smb_web_client extends block_base {
         if (!isset($smb_cfg)){
             // GT mod 2008/12/19 - report different error if file exists but config variable not set
             if (file_exists($this->blockdir.'/config_smb_web_client.php')){
-                $this->content->text=notify('Configuration for this block has errors!','notifyproblem','center',true);
+                $this->content->text=notify(get_string('configerror', 'block_smb_web_client') ,'notifyproblem','center',true);
             } else {
-                $this->content->text=notify('Configuration for this block has not been completed!','notifyproblem','center',true);
+                $this->content->text=notify(get_string('configincomplete', 'block_smb_web_client'),'notifyproblem','center',true);
             }
             return;
         }
@@ -172,7 +172,7 @@ class block_smb_web_client extends block_base {
         if ($USER->auth!='manual'){
             // get home directory string from language file
             $homedirstr=get_string('homedir', 'block_smb_web_client');
-            $homedirstr=$homedirstr=="[[homedir]]" ? "My Home Directory" : $this->title;
+            $homedirstr=$homedirstr=="[[homedir]]" ? get_string('homedir', 'block_smb_web_client') : $this->title;
             $shareurl=$this->blockwww.'/smbwebclient_moodle.php?sesskey='.$USER->sesskey.'&amp;share=__home__';
 
             // modify shareurl to use ssl if necessary
@@ -181,7 +181,7 @@ class block_smb_web_client extends block_base {
             }
 
             // add home directory link to block content
-            $this->content->text = '<a href="#" onclick="window.open(\''.$shareurl.'\',\''.$this->nice_popup_title($homedirstr).'\',\'width=640,height=480, scrollbars=1, resizable=1\'); return false;"><img src="'.$this->blockwww.'/pix/folder_home.png" alt="Home Folder"/> '.$homedirstr.'</a>';
+            $this->content->text = '<a href="#" onclick="window.open(\''.$shareurl.'\',\''.$this->nice_popup_title($homedirstr).'\',\'width=640,height=480, scrollbars=1, resizable=1\'); return false;"><img src="'.$this->blockwww.'/pix/folder_home.png" alt="'.get_string('homefolder', 'block_smb_web_client').'"/> '.$homedirstr.'</a>';
         }
         // END GT Mod
 
@@ -204,7 +204,7 @@ class block_smb_web_client extends block_base {
                             if (is_int($courseid)){
 
                                 // Get course
-                                $course=get_record('course', 'id', $courseid);
+                                $course = $DB->get_record('course', array('id' => $courseid));
 
                                 $ci=false;
                                 if ($course){
@@ -247,10 +247,10 @@ class block_smb_web_client extends block_base {
         global $CFG, $USER, $smb_cfg;
         $shareurl=$this->blockwww.'/smbwebclient_moodle.php?sesskey='.$USER->sesskey.'&amp;share='.$share_key;
 
-            // GT Mod 2009031700 force https protocol if necessary
-            if (isset($smb_cfg->cfgssl) && $smb_cfg->cfgssl){
-                $shareurl=str_ireplace('http://', 'https://', $shareurl);
-            }
+        // GT Mod 2009031700 force https protocol if necessary
+        if (isset($smb_cfg->cfgssl) && $smb_cfg->cfgssl){
+            $shareurl=str_ireplace('http://', 'https://', $shareurl);
+        }
 
         $this->content->text.=$this->content->text!='' ? '<br />' : '';
         $this->content->text.='<a href="#" onclick="window.open(\''.$shareurl.'\',\''.$this->nice_popup_title($share_arr['title']).'\',\'width=640,height=480, scrollbars=1, resizable=1\'); return false;"><img src="'.$CFG->pixpath.'/f/folder.gif" alt="'.$share_arr['title'].'" /> '.$share_arr['title'].'</a>';
